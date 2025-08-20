@@ -1,0 +1,56 @@
+{
+    "go.useLanguageServer": true,
+    "go.languageServerExperimentalFeatures": {
+        "diagnostics": true,
+        "documentLink": true
+    },
+    "go.languageServerFlags": [
+        "-rpc.trace",
+        "-logfile=/tmp/gopls.log"
+    ],
+    "go.toolsManagement.autoUpdate": true,
+    "go.gopath": "D:\\Program Files\\third_go",
+    "go.goroot": "C:\\Program Files\\Go",
+    "go.gocodeAutoBuild": true,
+    "go.buildOnSave": "package",
+    "go.lintOnSave": "package",
+    "go.vetOnSave": "package",
+    "go.coverOnSave": false,
+    "go.testOnSave": false,
+    "go.formatTool": "goimports",
+    "go.lintTool": "golangci-lint",
+    "go.alternateTools": {},
+    "go.buildTags": "",
+    "go.testFlags": [
+        "-v"
+    ],
+    "go.testTimeout": "30s",
+    "go.coverOptions": "showCoveredCodeOnly",
+    "go.gocodePackageLookupMode": "go",
+    "go.gotoSymbol.includeImports": true,
+    "go.gotoSymbol.includeGoroot": true,
+    "go.docsTool": "godoc",
+    "go.useCodeSnippetsOnFunctionSuggest": true,
+    "go.useCodeSnippetsOnFunctionSuggestWithoutType": true,
+    "go.autocompleteUnimportedPackages": true,
+    "go.surveys": {
+        "analysisTools": false,
+        "explain": false,
+        "goPlayground": false,
+        "welcome": false
+    },
+    "go.toolsEnvVars": {
+        "GOPROXY": "https://goproxy.cn,direct",
+        "GOSUMDB": "off"
+    },
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "[go]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    }
+}

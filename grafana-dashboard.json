@@ -1,0 +1,131 @@
+{
+    "dashboard": {
+        "id": null,
+        "title": "Queue System Dashboard",
+        "tags": [
+            "queue",
+            "system"
+        ],
+        "style": "dark",
+        "timezone": "browser",
+        "panels": [
+            {
+                "id": 1,
+                "title": "API Request Rate",
+                "type": "graph",
+                "targets": [
+                    {
+                        "expr": "rate(api_request_total[5m])",
+                        "legendFormat": "{{method}} {{endpoint}}"
+                    }
+                ],
+                "yAxes": [
+                    {
+                        "label": "Requests/sec"
+                    }
+                ],
+                "xAxes": [
+                    {
+                        "type": "time"
+                    }
+                ],
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 0
+                }
+            },
+            {
+                "id": 2,
+                "title": "Queue Length",
+                "type": "graph",
+                "targets": [
+                    {
+                        "expr": "queue_length",
+                        "legendFormat": "{{tenant_id}} - {{activity_name}}"
+                    }
+                ],
+                "yAxes": [
+                    {
+                        "label": "Queue Size"
+                    }
+                ],
+                "xAxes": [
+                    {
+                        "type": "time"
+                    }
+                ],
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 0
+                }
+            },
+            {
+                "id": 3,
+                "title": "Release Rate",
+                "type": "graph",
+                "targets": [
+                    {
+                        "expr": "rate(queue_release_total[5m])",
+                        "legendFormat": "{{tenant_id}} - {{method}}"
+                    }
+                ],
+                "yAxes": [
+                    {
+                        "label": "Releases/sec"
+                    }
+                ],
+                "xAxes": [
+                    {
+                        "type": "time"
+                    }
+                ],
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 0,
+                    "y": 8
+                }
+            },
+            {
+                "id": 4,
+                "title": "Response Time",
+                "type": "graph",
+                "targets": [
+                    {
+                        "expr": "histogram_quantile(0.95, rate(api_request_duration_seconds_bucket[5m])) * 1000",
+                        "legendFormat": "95th percentile"
+                    },
+                    {
+                        "expr": "histogram_quantile(0.50, rate(api_request_duration_seconds_bucket[5m])) * 1000",
+                        "legendFormat": "50th percentile"
+                    }
+                ],
+                "yAxes": [
+                    {
+                        "label": "Response Time (ms)"
+                    }
+                ],
+                "xAxes": [
+                    {
+                        "type": "time"
+                    }
+                ],
+                "gridPos": {
+                    "h": 8,
+                    "w": 12,
+                    "x": 12,
+                    "y": 8
+                }
+            }
+        ],
+        "time": {
+            "from": "now-30m",
+            "to": "now"
+        },
+        "refresh": "10s"
+    }
+}

@@ -1,0 +1,326 @@
+/* 排隊組件樣式 */
+.queue-widget {
+    max-width: 400px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background: white;
+}
+
+.queue-widget.theme-dark {
+    background: #1a1a1a;
+    color: white;
+}
+
+.queue-container {
+    padding: 24px;
+}
+
+.queue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.queue-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.queue-status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ccc;
+    transition: background-color 0.3s ease;
+}
+
+.queue-status-indicator.status-idle {
+    background: #6b7280;
+}
+
+.queue-status-indicator.status-queuing {
+    background: #f59e0b;
+    animation: pulse 2s infinite;
+}
+
+.queue-status-indicator.status-ready {
+    background: #10b981;
+}
+
+.queue-status-indicator.status-error {
+    background: #ef4444;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.queue-content {
+    min-height: 200px;
+}
+
+.queue-state {
+    text-align: center;
+}
+
+.queue-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+}
+
+.queue-icon.success {
+    color: #10b981;
+}
+
+.queue-icon.error {
+    color: #ef4444;
+}
+
+.queue-position-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 24px;
+}
+
+.queue-position,
+.queue-eta {
+    text-align: center;
+}
+
+.position-number,
+.eta-time {
+    display: block;
+    font-size: 32px;
+    font-weight: bold;
+    color: #3b82f6;
+    line-height: 1;
+}
+
+.position-label,
+.eta-label {
+    display: block;
+    font-size: 14px;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.queue-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 24px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #10b981);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+    width: 0%;
+}
+
+.queue-details {
+    margin-bottom: 24px;
+}
+
+.queue-message {
+    margin: 0 0 16px 0;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+.queue-stats {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 14px;
+}
+
+.stat-label {
+    color: #6b7280;
+}
+
+.stat-value {
+    font-weight: 600;
+    color: #374151;
+}
+
+.theme-dark .stat-value {
+    color: #f3f4f6;
+}
+
+/* 按鈕樣式 */
+.btn-primary,
+.btn-secondary,
+.btn-success {
+    width: 100%;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: none;
+}
+
+.btn-primary {
+    background: #3b82f6;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.btn-secondary:hover {
+    background: #e5e7eb;
+}
+
+.btn-success {
+    background: #10b981;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+.theme-dark .btn-secondary {
+    background: #374151;
+    color: #f3f4f6;
+}
+
+.theme-dark .btn-secondary:hover {
+    background: #4b5563;
+}
+
+/* 位置改善動畫 */
+.position-improvement {
+    position: absolute;
+    top: -20px;
+    right: -10px;
+    background: #10b981;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+    animation: positionImprovement 2s ease-out forwards;
+}
+
+@keyframes positionImprovement {
+    0% {
+        opacity: 0;
+        transform: translateY(10px) scale(0.8);
+    }
+    20% {
+        opacity: 1;
+        transform: translateY(-5px) scale(1.1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.8);
+    }
+}
+
+.queue-position {
+    position: relative;
+}
+
+.queue-footer {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #e5e7eb;
+    text-align: center;
+}
+
+.theme-dark .queue-footer {
+    border-top-color: #374151;
+}
+
+.queue-powered {
+    color: #9ca3af;
+    font-size: 12px;
+}
+
+/* 響應式設計 */
+@media (max-width: 480px) {
+    .queue-container {
+        padding: 16px;
+    }
+    
+    .queue-position-info {
+        flex-direction: column;
+        gap: 16px;
+    }
+    
+    .position-number,
+    .eta-time {
+        font-size: 28px;
+    }
+}
+
+/* 載入動畫 */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 錯誤狀態樣式 */
+.error-title {
+    color: #ef4444;
+    margin: 16px 0;
+}
+
+.ready-title {
+    color: #10b981;
+    margin: 16px 0;
+}
+
+/* 暗色主題特定樣式 */
+.theme-dark .queue-message {
+    color: #9ca3af;
+}
+
+.theme-dark .position-label,
+.theme-dark .eta-label,
+.theme-dark .stat-label {
+    color: #9ca3af;
+}
+
+.theme-dark .queue-progress-bar {
+    background: #374151;
+}
+
