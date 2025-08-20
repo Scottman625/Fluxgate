@@ -137,7 +137,7 @@ version: '3.8'
 
 services:
   queue-server:
-    image: ghcr.io/Scottman625/Fluxgate:master
+    image: ghcr.io/scottman625/fluxgate:master
     ports:
       - "8085:8080"
       - "9092:9090"

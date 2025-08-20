@@ -80,7 +80,7 @@ version: '3.8'
 
 services:
   queue-server:
-    image: ghcr.io/Scottman625/Fluxgate:IMAGE_TAG
+    image: ghcr.io/scottman625/fluxgate:IMAGE_TAG
     ports:
       - "8085:8080"
       - "9092:9090"
