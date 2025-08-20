@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-system
+  namespace: queue-system
+  labels:
+    app: queue-system
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: queue-system
+  template:
+    metadata:
+      labels:
+        app: queue-system
+    spec:
+      containers:
+      - name: queue-system
+        image: ghcr.io/Scottman625/Fluxgate:IMAGE_TAG
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 9090
+          name: metrics
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: queue-system-secret
+              key: database-url
+        - name: REDIS_ADDR
+          valueFrom:
+            configMapKeyRef:
+              name: queue-system-config
+              key: redis-addr
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: queue-system-secret
+              key: redis-password
+        - name: PORT
+          value: "8080"
+        - name: GIN_MODE
+          value: "release"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5

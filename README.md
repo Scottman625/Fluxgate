@@ -52,10 +52,10 @@
    ```
 
 3. **訪問應用**
-   - Dashboard: http://localhost:8080
-   - API 文檔: http://localhost:8080/api/v1
-   - Prometheus: http://localhost:9091
-   - Grafana: http://localhost:3000 (admin/admin)
+   - Dashboard: http://localhost:8085
+   - API 文檔: http://localhost:8085/api/v1
+   - Prometheus: http://localhost:9093
+   - Grafana: http://localhost:3001 (admin/admin)
 
 ### 本地開發
 

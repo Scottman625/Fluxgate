@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: password
       PGUSER: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./migrations:/docker-entrypoint-initdb.d
@@ -22,7 +22,7 @@ services:
   redis:
     image: redis:7-alpine
     ports:
-      - "6379:6379"
+      - "6380:6379"
     command: redis-server --appendonly yes
     volumes:
       - redis_data:/data
@@ -35,8 +35,8 @@ services:
   queue-server:
     build: .
     ports:
-      - "8080:8080"      # API server
-      - "9090:9090"      # Prometheus metrics
+      - "8085:8080"      # API server
+      - "9092:9090"      # Prometheus metrics
     environment:
       DATABASE_URL: "postgres://postgres:password@postgres/queuedb?sslmode=disable"
       REDIS_ADDR: "redis:6379"
@@ -58,7 +58,7 @@ services:
   prometheus:
     image: prom/prometheus:latest
     ports:
-      - "9091:9090"      # Prometheus UI
+      - "9093:9090"      # Prometheus UI
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus_data:/prometheus
@@ -76,7 +76,7 @@ services:
   grafana:
     image: grafana/grafana:latest
     ports:
-      - "3000:3000"
+      - "3001:3000"
     environment:
       GF_SECURITY_ADMIN_PASSWORD: admin
     volumes:

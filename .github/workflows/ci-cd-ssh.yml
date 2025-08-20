@@ -1,0 +1,75 @@
+name: Deploy to Server via SSH
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: Scottman625/Fluxgate
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:master
+        cache-from: type=gha
+        cache-to: type=gha,mode=max
+
+    - name: Deploy to server
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_PORT }}
+        script: |
+          # 停止現有服務
+          docker-compose down
+          
+          # 登入 GitHub Container Registry
+          echo ${{ secrets.GITHUB_TOKEN }} | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
+          
+          # 拉取最新映像檔
+          docker pull ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          
+          # 更新 docker-compose.yml 中的映像檔標籤
+          sed -i "s|IMAGE_TAG|${{ github.sha }}|g" docker-compose.yml
+          
+          # 啟動服務
+          docker-compose up -d
+          
+          # 等待服務啟動
+          sleep 30
+          
+          # 健康檢查
+          curl -f http://localhost:8085/health || exit 1
+          
+          echo "Deployment completed successfully!"
+
+    - name: Health check
+      run: |
+        # 外部健康檢查
+        curl -f ${{ secrets.APP_URL }}:8085/health || exit 1

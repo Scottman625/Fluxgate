@@ -1,0 +1,53 @@
+# name: Deploy to Kubernetes
+
+# on:
+#   push:
+#     branches: [ master ]
+#   workflow_dispatch:
+
+# env:
+#   KUBE_CONFIG: ${{ secrets.KUBE_CONFIG_DATA }}
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v4
+
+#     - name: Setup kubectl
+#       uses: azure/setup-kubectl@v3
+#       with:
+#         version: 'latest'
+
+#     - name: Configure kubectl
+#       run: |
+#         echo "${{ env.KUBE_CONFIG }}" | base64 -d > kubeconfig.yaml
+#         export KUBECONFIG=kubeconfig.yaml
+
+#     - name: Deploy to Kubernetes
+#       run: |
+#         # 更新 Docker 映像檔標籤
+#         sed -i "s|IMAGE_TAG|${{ github.sha }}|g" k8s/deployment.yaml
+        
+#         # 應用 Kubernetes 配置
+#         kubectl apply -f k8s/namespace.yaml
+#         kubectl apply -f k8s/configmap.yaml
+#         kubectl apply -f k8s/secret.yaml
+#         kubectl apply -f k8s/deployment.yaml
+#         kubectl apply -f k8s/service.yaml
+#         kubectl apply -f k8s/ingress.yaml
+
+#     - name: Wait for deployment
+#       run: |
+#         kubectl rollout status deployment/queue-system -n queue-system --timeout=300s
+
+#     - name: Health check
+#       run: |
+#         # 等待服務啟動
+#         sleep 30
+#         # 執行健康檢查
+#         kubectl port-forward svc/queue-system 8080:8080 -n queue-system &
+#         sleep 10
+#         curl -f http://localhost:8080/health || exit 1

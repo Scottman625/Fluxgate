@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: queue-system-service
+  namespace: queue-system
+  labels:
+    app: queue-system
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8085
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  - port: 9092
+    targetPort: 9090
+    protocol: TCP
+    name: metrics
+  selector:
+    app: queue-system
