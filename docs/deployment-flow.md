@@ -51,8 +51,8 @@ graph TD
     context: .
     push: true
     tags: |
-             ghcr.io/scottman625/fluxgate:${{ github.sha }}
-       ghcr.io/scottman625/fluxgate:master
+             ghcr.io/Scottman625/fluxgate:${{ github.sha }}
+       ghcr.io/Scottman625/fluxgate:master
 ```
 
 **映像檔標籤策略**：
@@ -82,7 +82,7 @@ docker-compose down
 echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
 # 拉取最新映像檔
-   docker pull ghcr.io/scottman625/fluxgate:${{ github.sha }}
+   docker pull ghcr.io/Scottman625/fluxgate:${{ github.sha }}
 
 # 更新 docker-compose.yml 中的映像檔標籤
 sed -i "s|IMAGE_TAG|${{ github.sha }}|g" docker-compose.yml
@@ -146,7 +146,7 @@ version: '3.8'
 
 services:
   queue-server:
-    image: ghcr.io/scottman625/fluxgate:IMAGE_TAG
+    image: ghcr.io/Scottman625/fluxgate:IMAGE_TAG
     ports:
       - "8085:8080"
       - "9092:9090"
@@ -225,7 +225,7 @@ docker-compose ps
 docker-compose logs -f queue-server
 
 # 檢查映像檔
-   docker images ghcr.io/scottman625/fluxgate
+   docker images ghcr.io/Scottman625/fluxgate
 
 # 測試健康檢查端點
 curl -v http://localhost:8085/health
@@ -245,7 +245,7 @@ docker network inspect queue-system_default
   if: failure()
   run: |
     # 回滾到上一個版本
-         docker pull ghcr.io/scottman625/fluxgate:previous
+         docker pull ghcr.io/Scottman625/fluxgate:previous
     sed -i "s|IMAGE_TAG|previous|g" docker-compose.yml
     docker-compose up -d
 ```
@@ -254,7 +254,7 @@ docker network inspect queue-system_default
 ```bash
 # 在伺服器上執行
 cd /opt/queue-system
-   docker pull ghcr.io/scottman625/fluxgate:previous_commit_sha
+   docker pull ghcr.io/Scottman625/fluxgate:previous_commit_sha
 sed -i "s|IMAGE_TAG|previous_commit_sha|g" docker-compose.yml
 docker-compose up -d
 ```

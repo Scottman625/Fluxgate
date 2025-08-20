@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: queue-system
-        image: ghcr.io/scottman625/fluxgate:IMAGE_TAG
+        image: ghcr.io/Scottman625/fluxgate:IMAGE_TAG
         ports:
         - containerPort: 8080
           name: http

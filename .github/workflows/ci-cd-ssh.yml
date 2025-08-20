@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: scottman625/fluxgate
+  IMAGE_NAME: Scottman625/fluxgate
 
 jobs:
   build-and-deploy:
